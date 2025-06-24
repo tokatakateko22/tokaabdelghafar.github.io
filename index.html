@@ -3,217 +3,646 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Toka Abdelghafar Ebrahim | Data Scientist</title>
+    <title>Toka Abdelghafar Ebrahim | Portfolio</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <!-- EmailJS SDK -->
+    <script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <style>
+        /* Custom Styles */
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Roboto', sans-serif;
+            background-color: #0a0a1a;
+            color: #e0e0e0;
+        }
+        h1, h2, h3, .nav-link {
+            font-family: 'Orbitron', sans-serif;
         }
         .section-title {
-            @apply text-3xl font-bold text-gray-800 mb-8 text-center;
+            border-bottom: 2px solid #0ea5e9; /* sky-500 */
+            padding-bottom: 10px;
+            display: inline-block;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
         .card {
-            @apply bg-white rounded-lg shadow-lg p-6 transition-transform duration-300 hover:scale-105;
+            background-color: rgba(17, 24, 39, 0.8);
+            border: 1px solid #374151; /* gray-700 */
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
         }
+        .card:hover {
+            transform: translateY(-5px);
+            background-color: rgba(30, 41, 59, 0.9); /* gray-800 */
+            border-color: #0ea5e9; /* sky-500 */
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 1rem;
+            height: 100%;
+            width: 4px;
+            background: #0ea5e9; /* sky-500 */
+        }
+        .timeline-item .timeline-icon {
+            position: absolute;
+            left: 1rem;
+            transform: translateX(-50%);
+            background: #0a0a1a;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #0ea5e9; /* sky-500 */
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            animation: fadeIn 0.3s;
+        }
+        .modal-content {
+            background-color: #0a0a1a;
+            margin: 10% auto;
+            padding: 2rem;
+            border: 1px solid #0ea5e9; /* sky-500 */
+            width: 80%;
+            max-width: 700px;
+            border-radius: 8px;
+            animation: slideIn 0.3s;
+        }
+        .close-button {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close-button:hover,
+        .close-button:focus {
+            color: #fff;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideIn {
+            from { transform: translateY(-50px); }
+            to { transform: translateY(0); }
+        }
+        
+        /* Entrance animations */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s forwards;
+        }
+        .fade-in {
+            opacity: 0;
+            animation: fadeIn 0.8s forwards;
+        }
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .contact-form input, .contact-form textarea {
+            background-color: rgba(17, 24, 39, 0.8);
+            border: 1px solid #374151; /* gray-700 */
+        }
+         .contact-form input:focus, .contact-form textarea:focus {
+            outline: none;
+            border-color: #0ea5e9; /* sky-500 */
+         }
+
+        .btn-primary {
+            border: 2px solid #0ea5e9; /* sky-500 */
+            color: #0ea5e9; /* sky-500 */
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+        .btn-primary:hover {
+            background-color: #0ea5e9; /* sky-500 */
+            color: #0a0a1a;
+        }
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Navigation indicator */
+        .nav-link {
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            transform: scaleX(0);
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: #0ea5e9;
+            transform-origin: bottom right;
+            transition: transform 0.25s ease-out;
+        }
+
+        .nav-link:hover::after, .nav-active::after {
+            transform: scaleX(1);
+            transform-origin: bottom left;
+        }
+
     </style>
 </head>
-<body class="bg-gray-50 text-gray-700">
+<body class="bg-gray-900 text-gray-200">
 
-    <!-- Header & Hero Section -->
-    <header class="bg-white shadow-md sticky top-0 z-50">
-        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <div class="text-2xl font-bold text-gray-800">Toka Abdelghafar Ebrahim</div>
-            <div class="hidden md:flex space-x-6">
-                <a href="#about" class="text-gray-600 hover:text-blue-500">About</a>
-                <a href="#experience" class="text-gray-600 hover:text-blue-500">Experience</a>
-                <a href="#projects" class="text-gray-600 hover:text-blue-500">Projects</a>
-                <a href="#skills" class="text-gray-600 hover:text-blue-500">Skills</a>
-                <a href="#contact" class="text-gray-600 hover:text-blue-500">Contact</a>
-            </div>
-        </nav>
+    <!-- Header -->
+    <header id="header" class="bg-gray-900/50 backdrop-blur-sm p-4 fixed w-full top-0 z-50 transition-all duration-300">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="#home" class="text-2xl font-bold text-sky-400">TAE</a>
+            <nav class="hidden md:flex space-x-6">
+                <a href="#home" class="nav-link hover:text-sky-400 transition">Home</a>
+                <a href="#education" class="nav-link hover:text-sky-400 transition">Education</a>
+                <a href="#experience" class="nav-link hover:text-sky-400 transition">Experience</a>
+                <a href="#skills" class="nav-link hover:text-sky-400 transition">Skills</a>
+                <a href="#projects" class="nav-link hover:text-sky-400 transition">Projects</a>
+                <a href="#contact" class="nav-link hover:text-sky-400 transition">Contact</a>
+            </nav>
+            <button id="mobile-menu-button" class="md:hidden text-2xl">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden mt-4">
+            <a href="#home" class="block py-2 px-4 nav-link hover:bg-gray-800">Home</a>
+            <a href="#education" class="block py-2 px-4 nav-link hover:bg-gray-800">Education</a>
+            <a href="#experience" class="block py-2 px-4 nav-link hover:bg-gray-800">Experience</a>
+            <a href="#skills" class="block py-2 px-4 nav-link hover:bg-gray-800">Skills</a>
+            <a href="#projects" class="block py-2 px-4 nav-link hover:bg-gray-800">Projects</a>
+            <a href="#contact" class="block py-2 px-4 nav-link hover:bg-gray-800">Contact</a>
+        </div>
     </header>
 
-    <main class="container mx-auto px-6 py-12">
-        <!-- Hero Section -->
-        <section id="hero" class="text-center py-20">
-            <h1 class="text-5xl md:text-6xl font-extrabold text-gray-900 mb-4">Toka Abdelghafar Ebrahim</h1>
-            <p class="text-xl md:text-2xl text-blue-600 font-semibold mb-6">Data Science & Machine Learning Enthusiast</p>
-            <p class="max-w-3xl mx-auto text-lg text-gray-600 mb-8">
-                Aspiring Data Scientist with a strong foundation in machine learning, data analysis, and predictive modeling. Passionate about leveraging data to solve complex problems and drive insightful decisions.
-            </p>
-            <a href="#contact" class="bg-blue-600 text-white font-bold py-3 px-8 rounded-full hover:bg-blue-700 transition duration-300">Get in Touch</a>
-        </section>
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 pt-24">
 
-        <!-- About Me -->
-        <section id="about" class="py-16">
-             <h2 class="section-title">About Me</h2>
-             <div class="flex flex-col md:flex-row items-center bg-white p-8 rounded-xl shadow-md">
-                <div class="md:w-3/4 text-lg">
-                    <p class="mb-4">
-                        I am a dedicated and analytical student pursuing a degree in Data Science from the Faculty of Computers and Artificial Intelligence at Cairo University. With a GPA of 3.34, I have developed a strong academic background in the field.
-                    </p>
-                    <p class="mb-4">
-                        My practical experience includes internships at EGBANK and Cellula Technologies, where I honed my skills in retail risk analysis, predictive modeling, and the full lifecycle of machine learning projects—from data preprocessing to model deployment.
-                    </p>
-                    <p>
-                        I am driven by a passion for building intelligent systems and have a diverse portfolio of projects, including conversational AI, deep learning models for image and text processing, and data-driven applications.
-                    </p>
+        <!-- Introduction Section -->
+        <section id="home" class="min-h-screen flex items-center justify-center text-center">
+            <div class="grid md:grid-cols-2 gap-8 items-center">
+                <div class="fade-in" style="animation-delay: 0.2s;">
+                    <img src="https://placehold.co/400x400/0a0a1a/0ea5e9?text=TAE" alt="Toka Abdelghafar Ebrahim" class="rounded-full border-4 border-sky-500 mx-auto w-64 h-64 md:w-80 md:h-80 object-cover">
                 </div>
-             </div>
-        </section>
-
-
-        <!-- Experience Section -->
-        <section id="experience" class="py-16">
-            <h2 class="section-title">Professional Experience</h2>
-            <div class="space-y-8">
-                <div class="card">
-                    <h3 class="text-xl font-bold text-gray-800">Data Analyst Intern</h3>
-                    <p class="text-blue-600 font-semibold mb-2">EGBANK | Cairo, Egypt</p>
-                    <p class="text-sm text-gray-500 mb-4">July 2024 - August 2024</p>
-                    <ul class="list-disc list-inside space-y-2">
-                        <li>Worked as a retail risk data analyst focusing on unsecured loans.</li>
-                        <li>Analyzed loan takers' data to predict their repayment behavior for future loans.</li>
-                        <li>Automated the data cleaning process, significantly improving the accuracy of data insights.</li>
-                    </ul>
-                </div>
-                <div class="card">
-                    <h3 class="text-xl font-bold text-gray-800">Machine Learning Intern</h3>
-                    <p class="text-blue-600 font-semibold mb-2">Cellula Technologies</p>
-                    <p class="text-sm text-gray-500 mb-4">June 2024 - July 2024</p>
-                    <ul class="list-disc list-inside space-y-2">
-                        <li>Contributed to several end-to-end machine learning projects.</li>
-                        <li>Gained hands-on experience in data preprocessing and feature engineering.</li>
-                        <li>Responsible for training various machine learning models and their subsequent deployment.</li>
-                    </ul>
+                <div class="text-left">
+                    <h1 class="text-4xl md:text-6xl font-bold mb-4 fade-in-up text-sky-400" style="animation-delay: 0.4s;">Toka Abdelghafar Ebrahim</h1>
+                    <h2 class="text-2xl md:text-3xl mb-4 fade-in-up text-green-400" style="animation-delay: 0.6s;">Data Scientist & ML Enthusiast</h2>
+                    <p class="mb-6 fade-in-up" style="animation-delay: 0.8s;">
+                        Passionate and driven Data Science student with a strong foundation in machine learning, data analysis, and software development. Proven ability to deliver impactful results through internships at EGBANK and Cellula Technologies. Enthusiastic about leveraging cutting-edge AI to solve complex problems and build intelligent systems.
+                    </p>
+                    <div class="flex justify-center md:justify-start space-x-4 fade-in-up" style="animation-delay: 1s;">
+                        <a href="#contact" class="btn-primary py-2 px-6 rounded-full text-lg">Contact Me</a>
+                        <a href="https://flowcv.com/resume/nf0ivt9bkd" target="_blank" rel="noopener noreferrer" class="btn-primary py-2 px-6 rounded-full text-lg">View CV</a>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- Projects Section -->
-        <section id="projects" class="py-16">
-            <h2 class="section-title">Projects</h2>
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Project Card 1 -->
-                <div class="card">
-                    <h3 class="text-xl font-bold mb-2">Conversational Chatbot</h3>
-                    <p>Implemented a RAG chatbot using LangChain and a local LLM, capable of answering queries via a vector database, web search, and code execution.</p>
-                </div>
-                <!-- Project Card 2 -->
-                <div class="card">
-                    <h3 class="text-xl font-bold mb-2">Spelling Correction System</h3>
-                    <p>Built a deep learning system using Transformer models (BART, T5) for high-performance spelling correction.</p>
-                </div>
-                <!-- Project Card 3 -->
-                <div class="card">
-                    <h3 class="text-xl font-bold mb-2">Image Captioning</h3>
-                    <p>Developed a GRU-based model to automatically generate descriptive captions for images.</p>
-                </div>
-                <!-- Project Card 4 -->
-                <div class="card">
-                    <h3 class="text-xl font-bold mb-2">Fingerprint Authentication</h3>
-                    <p>Designed and built a Siamese network model to accurately authenticate individuals based on their fingerprints.</p>
-                </div>
-                <!-- Project Card 5 -->
-                <div class="card">
-                    <h3 class="text-xl font-bold mb-2">Age Prediction from Images</h3>
-                    <p>Constructed a Convolutional Neural Network (CNN) to predict a person's age from a given photograph.</p>
-                </div>
-                 <!-- Project Card 6 -->
-                 <div class="card">
-                    <h3 class="text-xl font-bold mb-2">Arabic Character Recognition</h3>
-                    <p>Developed a complete OCR system with a filter stack and two neural network structures for classifying Arabic characters.</p>
-                </div>
-                 <!-- Project Card 7 -->
-                 <div class="card">
-                    <h3 class="text-xl font-bold mb-2">Othello Game (AI vs. Human)</h3>
-                    <p>Built the classic Othello board game with a Python-based AI opponent.</p>
-                </div>
-                 <!-- Project Card 8 -->
-                 <div class="card">
-                    <h3 class="text-xl font-bold mb-2">Bank System Database</h3>
-                    <p>Developed a full-featured banking system application using Python and SQL for data management.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Skills & Education Section -->
-        <section id="skills" class="py-16">
-            <div class="grid md:grid-cols-2 gap-16">
-                <!-- Skills -->
-                <div>
-                    <h2 class="section-title">Skills</h2>
-                    <div class="space-y-4">
-                        <div class="bg-white p-4 rounded-lg shadow-sm">
-                            <h4 class="font-bold text-lg">Programming Languages</h4>
-                            <p>Python, C++</p>
+        <!-- Education Section -->
+        <section id="education" class="py-20">
+            <h2 class="section-title text-3xl font-bold text-center text-sky-400">Education</h2>
+            <div class="max-w-3xl mx-auto mt-12">
+                <div class="card p-6 rounded-lg">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h3 class="text-xl font-bold text-green-400">Faculty of Computers and Artificial Intelligence, Cairo University</h3>
+                            <p class="text-sky-400">Bachelor's Degree, Data Science Specialization</p>
+                            <p class="text-gray-400">Giza, Egypt</p>
                         </div>
-                         <div class="bg-white p-4 rounded-lg shadow-sm">
-                            <h4 class="font-bold text-lg">Tools & Technologies</h4>
-                            <p>Git, LaTeX (Overleaf/R Markdown)</p>
+                        <div class="text-right">
+                            <p class="font-bold text-gray-300">Expected: 07/2025</p>
                         </div>
-                        <div class="bg-white p-4 rounded-lg shadow-sm">
-                            <h4 class="font-bold text-lg">Machine Learning</h4>
-                            <p>Regression, Classification, Deep Learning (CNNs, GRUs, Transformers), Data Mining</p>
+                    </div>
+                    <div class="mt-4">
+                        <button class="expand-button text-sky-400 font-bold">Show Details <i class="fas fa-chevron-down ml-1 transition-transform"></i></button>
+                        <div class="expandable-content hidden mt-4 pt-4 border-t border-gray-700">
+                           <p><strong>GPA:</strong> 3.34</p>
+                           <p><strong>Key Courses:</strong></p>
+                           <ul class="list-disc list-inside ml-4 text-gray-300">
+                                <li>Supervised Machine Learning: Regression and Classification</li>
+                                <li>Data Cleaning</li>
+                                <li>Data Visualization</li>
+                                <li>Advanced Algorithms</li>
+                                <li>Database Systems</li>
+                           </ul>
                         </div>
                     </div>
                 </div>
-                <!-- Education -->
-                <div>
-                     <h2 class="section-title">Education</h2>
-                     <div class="card">
-                         <h3 class="text-xl font-bold">Faculty of Computers and Artificial Intelligence</h3>
-                         <p class="text-blue-600 font-semibold">Cairo University | Giza, Egypt</p>
-                         <p class="text-sm text-gray-500 mb-2">Expected Graduation: July 2025</p>
-                         <p><strong>Specialization:</strong> Data Science</p>
-                         <p><strong>GPA:</strong> 3.34</p>
+            </div>
+        </section>
+
+        <!-- Work Experience Section -->
+        <section id="experience" class="py-20">
+            <h2 class="section-title text-3xl font-bold text-center text-sky-400">Work Experience</h2>
+            <div class="max-w-4xl mx-auto mt-12 relative timeline">
+                
+                <div class="timeline-item mb-12 pl-12 relative">
+                     <div class="timeline-icon"><i class="fas fa-briefcase"></i></div>
+                     <div class="card p-6 rounded-lg">
+                         <p class="text-sm text-gray-400 mb-1">07/2024 - 08/2024</p>
+                         <h3 class="text-xl font-bold text-green-400">Data Analyst Intern</h3>
+                         <p class="font-semibold text-sky-400 mb-3">EGBANK, Cairo, Egypt</p>
+                         <p class="text-gray-300">Served as a retail risk data analyst focusing on unsecured loans, predicting payment behaviors and automating data cleaning to enhance analytical accuracy.</p>
+                         <button class="expand-button mt-4 text-sky-400 font-bold">Show Details <i class="fas fa-chevron-down ml-1 transition-transform"></i></button>
+                         <div class="expandable-content hidden mt-4 pt-4 border-t border-gray-700">
+                            <ul class="list-disc list-inside ml-4 text-gray-300">
+                                <li>Analyzed loan taker's data and predicted whether they will pay their next loans or not.</li>
+                                <li>Automated the data cleaning process to give more accurate insights into the data.</li>
+                                <li>Contributed to risk assessment models for unsecured loan portfolios.</li>
+                            </ul>
+                         </div>
+                     </div>
+                </div>
+
+                <div class="timeline-item mb-12 pl-12 relative">
+                     <div class="timeline-icon"><i class="fas fa-microchip"></i></div>
+                     <div class="card p-6 rounded-lg">
+                         <p class="text-sm text-gray-400 mb-1">06/2024 - 07/2024</p>
+                         <h3 class="text-xl font-bold text-green-400">Machine Learning Intern</h3>
+                         <p class="font-semibold text-sky-400 mb-3">Cellula Technologies</p>
+                         <p class="text-gray-300">Engaged in multiple machine learning projects, covering the full lifecycle from data preprocessing and model training to deployment.</p>
+                         <button class="expand-button mt-4 text-sky-400 font-bold">Show Details <i class="fas fa-chevron-down ml-1 transition-transform"></i></button>
+                         <div class="expandable-content hidden mt-4 pt-4 border-t border-gray-700">
+                            <ul class="list-disc list-inside ml-4 text-gray-300">
+                                <li>Gained hands-on experience in data preprocessing for various datasets.</li>
+                                <li>Trained and fine-tuned several machine learning models.</li>
+                                <li>Assisted in the deployment of models into production environments.</li>
+                            </ul>
+                         </div>
+                     </div>
+                </div>
+
+                <div class="timeline-item pl-12 relative">
+                     <div class="timeline-icon"><i class="fas fa-hands-helping"></i></div>
+                     <div class="card p-6 rounded-lg">
+                         <p class="text-sm text-gray-400 mb-1">02/2025 - Present</p>
+                         <h3 class="text-xl font-bold text-green-400">Data Science Instructor (Volunteer)</h3>
+                         <p class="font-semibold text-sky-400 mb-3">IEEE Cairo University, Giza, Egypt</p>
+                         <p class="text-gray-300">Teaching students various machine learning techniques from a data science perspective, including classification, regression, and more.</p>
                      </div>
                 </div>
             </div>
         </section>
 
-    </main>
+        <!-- Skills Section -->
+        <section id="skills" class="py-20">
+            <h2 class="section-title text-3xl font-bold text-center text-sky-400">Skills</h2>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 max-w-5xl mx-auto mt-12">
+                <div class="card p-6 text-center flex flex-col justify-center items-center h-40 rounded-lg">
+                    <i class="fab fa-python text-5xl mb-2 text-sky-400"></i>
+                    <h3 class="font-bold text-lg">Python</h3>
+                </div>
+                <div class="card p-6 text-center flex flex-col justify-center items-center h-40 rounded-lg">
+                     <i class="fas fa-c text-5xl mb-2 text-sky-400">++</i>
+                    <h3 class="font-bold text-lg">C++</h3>
+                </div>
+                <div class="card p-6 text-center flex flex-col justify-center items-center h-40 rounded-lg">
+                    <i class="fas fa-database text-5xl mb-2 text-sky-400"></i>
+                    <h3 class="font-bold text-lg">SQL</h3>
+                </div>
+                <div class="card p-6 text-center flex flex-col justify-center items-center h-40 rounded-lg">
+                    <i class="fas fa-robot text-5xl mb-2 text-sky-400"></i>
+                    <h3 class="font-bold text-lg">TensorFlow</h3>
+                </div>
+                <div class="card p-6 text-center flex flex-col justify-center items-center h-40 rounded-lg">
+                    <i class="fas fa-brain text-5xl mb-2 text-sky-400"></i>
+                    <h3 class="font-bold text-lg">PyTorch</h3>
+                </div>
+                <div class="card p-6 text-center flex flex-col justify-center items-center h-40 rounded-lg">
+                    <i class="fas fa-link text-5xl mb-2 text-sky-400"></i>
+                    <h3 class="font-bold text-lg">LangChain</h3>
+                </div>
+                <div class="card p-6 text-center flex flex-col justify-center items-center h-40 rounded-lg">
+                    <i class="fas fa-chart-line text-5xl mb-2 text-sky-400"></i>
+                    <h3 class="font-bold text-lg">Pandas & SeaBorn</h3>
+                </div>
+                <div class="card p-6 text-center flex flex-col justify-center items-center h-40 rounded-lg">
+                    <i class="fab fa-git-alt text-5xl mb-2 text-sky-400"></i>
+                    <h3 class="font-bold text-lg">Git</h3>
+                </div>
+                <div class="card p-6 text-center flex flex-col justify-center items-center h-40 rounded-lg">
+                    <i class="fab fa-docker text-5xl mb-2 text-sky-400"></i>
+                    <h3 class="font-bold text-lg">Docker</h3>
+                </div>
+                <div class="card p-6 text-center flex flex-col justify-center items-center h-40 rounded-lg">
+                    <i class="fas fa-chart-bar text-5xl mb-2 text-sky-400"></i>
+                    <h3 class="font-bold text-lg">Power BI</h3>
+                </div>
+            </div>
+        </section>
 
-    <!-- Contact Section -->
-    <footer id="contact" class="bg-gray-800 text-white py-12">
-        <div class="container mx-auto px-6 text-center">
-            <h2 class="text-3xl font-bold mb-4">Contact Me</h2>
-            <p class="mb-8">I'm always open to discussing new projects, creative ideas, or opportunities to be part of an amazing team.</p>
-            <div class="flex justify-center items-center space-x-6 mb-8">
-                 <!-- Email -->
-                 <a href="mailto:tokaabdelghafar123@gmail.com" class="flex items-center space-x-2 hover:text-blue-400">
-                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path></svg>
-                    <span>tokaabdelghafar123@gmail.com</span>
-                </a>
-                 <!-- Phone -->
-                 <div class="flex items-center space-x-2">
-                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"></path></svg>
-                     <span>+201064415904</span>
-                 </div>
+        <!-- Projects Section -->
+        <section id="projects" class="py-20">
+            <h2 class="section-title text-3xl font-bold text-center text-sky-400">Projects</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto mt-12">
+                <div class="card project-card rounded-lg overflow-hidden cursor-pointer" data-title="Conversational Chatbot" data-github="https://github.com/tokatakateko22/Conversational_Chatbot" data-details="Implemented a Conversational RAG (Retrieval-Augmented Generation) chatbot using LangChain, powered by a local LLM through Ollama. Capable of answering technical queries using a vector database of LangChain documentation or local files, internet search via SerpAPI, and optional Python code execution for dynamic reasoning. A Gradio interface enables real-time, user-friendly interaction.">
+                    <img src="https://placehold.co/600x400/1f2937/39ff14?text=Chatbot" alt="Conversational Chatbot" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="text-xl font-bold text-green-400">Conversational Chatbot</h3>
+                                <p class="text-gray-400 mt-2">RAG chatbot with LangChain and local LLM.</p>
+                            </div>
+                            <a href="https://github.com/tokatakateko22/Conversational_Chatbot" class="github-link text-sky-400 hover:text-sky-300 text-2xl ml-4 shrink-0" target="_blank" rel="noopener noreferrer" title="View on GitHub"><i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card project-card rounded-lg overflow-hidden cursor-pointer" data-title="Spelling Correction System" data-github="https://github.com/tokatakateko22/Spelling_Correction_System" data-details="Built a deep learning system using transformer models (BART, T5) for performing highly accurate spelling correction on text data.">
+                    <img src="https://placehold.co/600x400/1f2937/39ff14?text=Spelling" alt="Spelling Correction System" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                         <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="text-xl font-bold text-green-400">Spelling Correction System</h3>
+                                <p class="text-gray-400 mt-2">Transformer-based model for spelling correction.</p>
+                            </div>
+                            <a href="https://github.com/tokatakateko22/Spelling_Correction_System" class="github-link text-sky-400 hover:text-sky-300 text-2xl ml-4 shrink-0" target="_blank" rel="noopener noreferrer" title="View on GitHub"><i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                </div>
+                 <div class="card project-card rounded-lg overflow-hidden cursor-pointer" data-title="Image Captioning" data-github="https://github.com/tokatakateko22/Image_Captioning" data-details="Developed a model using Gated Recurrent Units (GRU) to automatically generate descriptive captions for images.">
+                    <img src="https://placehold.co/600x400/1f2937/39ff14?text=Captioning" alt="Image Captioning" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="text-xl font-bold text-green-400">Image Captioning</h3>
+                                <p class="text-gray-400 mt-2">GRU model to generate captions for images.</p>
+                            </div>
+                            <a href="https://github.com/tokatakateko22/Image_Captioning" class="github-link text-sky-400 hover:text-sky-300 text-2xl ml-4 shrink-0" target="_blank" rel="noopener noreferrer" title="View on GitHub"><i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                </div>
+                 <div class="card project-card rounded-lg overflow-hidden cursor-pointer" data-title="Fingerprint Authentication" data-github="https://github.com/tokatakateko22/Fingerprint_Authentication" data-details="Built a secure authentication system using Siamese networks to verify fingerprints with high accuracy, learning a similarity metric to distinguish between genuine and imposter prints.">
+                    <img src="https://placehold.co/600x400/1f2937/39ff14?text=Fingerprint" alt="Fingerprint Authentication" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="text-xl font-bold text-green-400">Fingerprint Authentication</h3>
+                                <p class="text-gray-400 mt-2">Siamese networks model for authentication.</p>
+                            </div>
+                            <a href="https://github.com/tokatakateko22/Fingerprint_Authentication" class="github-link text-sky-400 hover:text-sky-300 text-2xl ml-4 shrink-0" target="_blank" rel="noopener noreferrer" title="View on GitHub"><i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                </div>
+                 <div class="card project-card rounded-lg overflow-hidden cursor-pointer" data-title="Age Prediction" data-github="#" data-details="Developed and trained Convolutional Neural Networks (CNNs) to accurately predict a person's age from their facial image.">
+                    <img src="https://placehold.co/600x400/1f2937/39ff14?text=Age+Prediction" alt="Age Prediction" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="text-xl font-bold text-green-400">Age Prediction</h3>
+                                <p class="text-gray-400 mt-2">CNNs to predict age from an image.</p>
+                            </div>
+                            <a href="#" class="github-link text-sky-400 hover:text-sky-300 text-2xl ml-4 shrink-0" target="_blank" rel="noopener noreferrer" title="View on GitHub"><i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                </div>
+                 <div class="card project-card rounded-lg overflow-hidden cursor-pointer" data-title="Othello Game" data-github="https://github.com/tokatakateko22/OthelloGame" data-details="Built the famous Othello game (AI vs Human) using Python, implementing game logic and an AI opponent with strategic algorithms.">
+                    <img src="https://placehold.co/600x400/1f2937/39ff14?text=Othello" alt="Othello Game" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                         <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="text-xl font-bold text-green-400">Othello Game</h3>
+                                <p class="text-gray-400 mt-2">AI vs Human Othello game in Python.</p>
+                            </div>
+                            <a href="https://github.com/tokatakateko22/OthelloGame" class="github-link text-sky-400 hover:text-sky-300 text-2xl ml-4 shrink-0" target="_blank" rel="noopener noreferrer" title="View on GitHub"><i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="flex justify-center space-x-6">
-                <!-- LinkedIn Icon -->
-                <a href="#" target="_blank" class="hover:text-blue-400">
-                    <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                        <path fill-rule="evenodd" d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" clip-rule="evenodd"/>
-                    </svg>
-                </a>
-                <!-- GitHub Icon -->
-                <a href="#" target="_blank" class="hover:text-blue-400">
-                     <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                        <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.49.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.031-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.378.203 2.398.1 2.65.64.7 1.03 1.595 1.03 2.688 0 3.848-2.338 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.001 10.001 0 0022 12c0-5.523-4.477-10-10-10z" clip-rule="evenodd"/>
-                    </svg>
-                </a>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-20">
+            <h2 class="section-title text-3xl font-bold text-center text-sky-400">Contact Me</h2>
+            <div class="max-w-2xl mx-auto mt-12 card p-8 rounded-lg">
+                <p class="text-center mb-8">Feel free to reach out for collaborations or just a friendly chat!</p>
+                <form id="contact-form" class="contact-form space-y-6">
+                    <input type="text" name="from_name" placeholder="Your Name" class="w-full p-3 rounded-lg text-white" required>
+                    <input type="email" name="from_email" placeholder="Your Email" class="w-full p-3 rounded-lg text-white" required>
+                    <textarea name="message" placeholder="Your Message" rows="5" class="w-full p-3 rounded-lg text-white" required></textarea>
+                    <button type="submit" id="submit-button" class="w-full btn-primary py-3 px-6 rounded-full text-lg">Send Message</button>
+                </form>
+                <div id="form-status" class="text-center mt-4"></div>
+                <div class="text-center mt-8">
+                    <p class="mb-4">Or find me on:</p>
+                    <div class="flex justify-center space-x-6 text-3xl">
+                        <a href="https://www.linkedin.com/in/toka-abdelghafar-631878245/" class="text-sky-400 hover:text-sky-300 transition"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://github.com/tokatakateko22" target="_blank" rel="noopener noreferrer" class="text-sky-400 hover:text-sky-300 transition"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
             </div>
-            <div class="border-t border-gray-700 mt-8 pt-6 text-sm text-gray-400">
-                <p>&copy; 2024 Toka Abdelghafar Ebrahim. All Rights Reserved.</p>
-            </div>
-        </div>
+        </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="text-center p-6 mt-12 border-t border-gray-800">
+        <p>&copy; 2024 Toka Abdelghafar Ebrahim. All Rights Reserved.</p>
     </footer>
 
+    <!-- Project Modal -->
+    <div id="projectModal" class="modal">
+      <div class="modal-content">
+        <span class="close-button">&times;</span>
+        <h2 id="modalTitle" class="text-3xl font-bold mb-4 text-green-400"></h2>
+        <p id="modalDetails" class="text-gray-300 mb-6"></p>
+        <a id="modalGithubLink" href="https://github.com/tokatakateko22" target="_blank" class="btn-primary py-2 px-4 rounded-full inline-block">
+            <i class="fab fa-github mr-2"></i>View on GitHub
+        </a>
+      </div>
+    </div>
 
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // EmailJS Initialization
+            (function() {
+                // IMPORTANT: Replace with your public key
+                emailjs.init({ publicKey: '2ZuQey7JJbmaZH3Zb' });
+            })();
+
+            const contactForm = document.getElementById('contact-form');
+            const submitButton = document.getElementById('submit-button');
+            const formStatus = document.getElementById('form-status');
+
+            contactForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+                
+                submitButton.disabled = true;
+                submitButton.textContent = 'Sending...';
+                formStatus.textContent = '';
+
+                // IMPORTANT: Replace with your service ID and template ID
+                const serviceID = 'service_61yh2w9';
+                const templateID = 'template_mznbo8t';
+
+                emailjs.sendForm(serviceID, templateID, this)
+                    .then(() => {
+                        submitButton.disabled = false;
+                        submitButton.textContent = 'Send Message';
+                        formStatus.textContent = 'Message sent successfully!';
+                        formStatus.classList.add('text-green-400');
+                        formStatus.classList.remove('text-red-400');
+                        contactForm.reset();
+                    }, (err) => {
+                        submitButton.disabled = false;
+                        submitButton.textContent = 'Send Message';
+                        formStatus.textContent = 'Failed to send message. ' + JSON.stringify(err);
+                        formStatus.classList.add('text-red-400');
+                        formStatus.classList.remove('text-green-400');
+                    });
+            });
+
+
+            // Mobile Menu Toggle
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            // Close mobile menu when a link is clicked
+            document.querySelectorAll('#mobile-menu a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                });
+            });
+
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    const href = this.getAttribute('href');
+                    // Prevent default for all, but only scroll for valid internal links
+                    e.preventDefault();
+                    // Check if the href is more than just a '#'
+                    if (href.length > 1) {
+                        const targetElement = document.querySelector(href);
+                        if (targetElement) {
+                             targetElement.scrollIntoView({
+                                behavior: 'smooth'
+                            });
+                        }
+                    }
+                });
+            });
+
+            // Header transparency on scroll
+            const header = document.getElementById('header');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    header.classList.add('bg-opacity-90');
+                } else {
+                    header.classList.remove('bg-opacity-90');
+                }
+            });
+
+            // Expandable sections for Education and Experience
+            document.querySelectorAll('.expand-button').forEach(button => {
+                button.addEventListener('click', () => {
+                    const content = button.nextElementSibling;
+                    const icon = button.querySelector('i');
+                    content.classList.toggle('hidden');
+                    icon.classList.toggle('rotate-180');
+                    if (!content.classList.contains('hidden')) {
+                        button.innerHTML = 'Show Less <i class="fas fa-chevron-up ml-1 transition-transform"></i>';
+                    } else {
+                        button.innerHTML = 'Show Details <i class="fas fa-chevron-down ml-1 transition-transform"></i>';
+                    }
+                });
+            });
+            
+            // Project Modals
+            const modal = document.getElementById('projectModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalDetails = document.getElementById('modalDetails');
+            const modalGithubLink = document.getElementById('modalGithubLink');
+            const closeButton = document.querySelector('.close-button');
+
+            document.querySelectorAll('.project-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    modalTitle.textContent = card.dataset.title;
+                    modalDetails.textContent = card.dataset.details;
+                    
+                    const githubUrl = card.dataset.github;
+                    if (githubUrl && githubUrl !== '#') {
+                        modalGithubLink.href = githubUrl;
+                        modalGithubLink.style.display = 'inline-block';
+                    } else {
+                        modalGithubLink.style.display = 'none';
+                    }
+
+                    modal.style.display = 'block';
+                });
+                
+                const githubLink = card.querySelector('.github-link');
+                if (githubLink) {
+                    githubLink.addEventListener('click', (e) => {
+                        e.stopPropagation(); 
+                    });
+                }
+            });
+
+            closeButton.addEventListener('click', () => {
+                modal.style.display = 'none';
+            });
+
+            window.addEventListener('click', (event) => {
+                if (event.target == modal) {
+                    modal.style.display = 'none';
+                }
+            });
+
+            // Dynamic navigation indicator
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('header nav a');
+
+            const activateNavLink = () => {
+                let current = '';
+
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    if (pageYOffset >= sectionTop - 60) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove('nav-active');
+                    if (link.getAttribute('href').includes(current)) {
+                        link.classList.add('nav-active');
+                    }
+                });
+            };
+
+            window.addEventListener('scroll', activateNavLink);
+            activateNavLink();
+
+        });
+    </script>
 </body>
 </html>
